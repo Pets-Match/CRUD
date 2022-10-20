@@ -1,2 +1,2 @@
-# Owner-CRUD
-CRUD service for owner
+# CRUD
+CRUD service for owner and pet
