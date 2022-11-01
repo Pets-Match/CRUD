@@ -12,5 +12,4 @@ class CreateOwnerController {
     }
 }
 
-
 export { CreateOwnerController }

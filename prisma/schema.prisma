@@ -8,7 +8,23 @@ datasource db {
 }
 
 model Owner {
-    id Int @id @default(autoincrement())
-    name String
-    phone Int
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+  idAddress Address?
+  doc Int
+  phone Int
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  owner Owner @relation(fields: [ownerId], references: [id])
+  ownerId Int @unique
+  zipCode Int
+  state String
+  city String
+  neighborhood String
+  street String
+  num String
+  addInfo String
 }
