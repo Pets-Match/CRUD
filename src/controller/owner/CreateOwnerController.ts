@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
 class CreateOwnerController {
-    async execute(req: Request, resp: Response) {
+    async execute(req: Request, res: Response) {
         try {
-            const { id, name, idAddress, phone } = req.body
+            const { id, name, email, idAddress, doc, phone } = req.body
 
-            return resp.status(200).json()
+            return res.status(200).json()
         } catch (err) {
-            return resp.status(400).json(err)
+            return res.status(400).json(err)
         }
     }
 }
