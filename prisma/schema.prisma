@@ -11,16 +11,17 @@ model Owner {
   id    Int    @id @default(autoincrement())
   name  String
   email String @unique
+  password String
   address Address @relation(fields: [addressId], references: [id])
   addressId Int
-  doc Int
-  phone Int
+  doc String
+  phone String
 }
 
 model Address {
   id Int @id @default(autoincrement())
   owners Owner[]
-  zipCode Int
+  zipCode String
   state String
   city String
   neighborhood String

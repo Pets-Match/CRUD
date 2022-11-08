@@ -37,21 +37,66 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateOwnerController = void 0;
+var prisma_1 = require("../../service/prisma");
+var bcryptjs_1 = require("bcryptjs");
 var CreateOwnerController = /** @class */ (function () {
     function CreateOwnerController() {
     }
-    CreateOwnerController.prototype.execute = function (req, resp) {
+    CreateOwnerController.prototype.execute = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, id, name, idAddress, phone;
+            var _a, name, email, password, doc, phone, zipCode, state, city, neighborhood, street, num, addInfo, ownerAlreadyRegistered, hashPassword, addr, err_1;
             return __generator(this, function (_b) {
-                try {
-                    _a = req.body, id = _a.id, name = _a.name, idAddress = _a.idAddress, phone = _a.phone;
-                    return [2 /*return*/, resp.status(200).json()];
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 5, , 6]);
+                        _a = req.body, name = _a.name, email = _a.email, password = _a.password, doc = _a.doc, phone = _a.phone, zipCode = _a.zipCode, state = _a.state, city = _a.city, neighborhood = _a.neighborhood, street = _a.street, num = _a.num, addInfo = _a.addInfo;
+                        return [4 /*yield*/, prisma_1.prisma.owner.findFirst({
+                                where: {
+                                    OR: [
+                                        { email: { equals: email } },
+                                        { doc: { equals: doc } }
+                                    ]
+                                }
+                            })];
+                    case 1:
+                        ownerAlreadyRegistered = _b.sent();
+                        if (ownerAlreadyRegistered) {
+                            throw new Error('Conta já cadastrada!');
+                        }
+                        return [4 /*yield*/, (0, bcryptjs_1.hash)(password, 7)];
+                    case 2:
+                        hashPassword = _b.sent();
+                        return [4 /*yield*/, prisma_1.prisma.address.create({
+                                data: {
+                                    zipCode: zipCode,
+                                    state: state,
+                                    city: city,
+                                    neighborhood: neighborhood,
+                                    street: street,
+                                    num: num,
+                                    addInfo: addInfo,
+                                }
+                            })];
+                    case 3:
+                        addr = _b.sent();
+                        return [4 /*yield*/, prisma_1.prisma.owner.create({
+                                data: {
+                                    name: name,
+                                    email: email,
+                                    password: hashPassword,
+                                    doc: doc,
+                                    phone: phone,
+                                    addressId: addr.id,
+                                }
+                            })];
+                    case 4:
+                        _b.sent();
+                        return [2 /*return*/, res.status(200).json()];
+                    case 5:
+                        err_1 = _b.sent();
+                        return [2 /*return*/, res.status(400).json(err_1)];
+                    case 6: return [2 /*return*/];
                 }
-                catch (err) {
-                    return [2 /*return*/, resp.status(400).json(err)];
-                }
-                return [2 /*return*/];
             });
         });
     };
