@@ -8,24 +8,36 @@ datasource db {
 }
 
 model Owner {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
-  password String
-  address Address @relation(fields: [addressId], references: [id])
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String  @unique
+  password  String
+  address   Address @relation(fields: [addressId], references: [id])
   addressId Int
-  doc String
-  phone String
+  doc       String
+  phone     String
+  pets      Pet[]
 }
 
 model Address {
-  id Int @id @default(autoincrement())
-  owners Owner[]
-  zipCode String
-  state String
-  city String
+  id           Int     @id @default(autoincrement())
+  owners       Owner[]
+  zipCode      String
+  state        String
+  city         String
   neighborhood String
-  street String
-  num String
-  addInfo String
+  street       String
+  num          String
+  addInfo      String
+}
+
+model Pet {
+  id      Int    @id @default(autoincrement())
+  name    String
+  age     Int
+  specie  String
+  race    String
+  gender  String
+  owner   Owner  @relation(fields: [ownerId], references: [id])
+  ownerId Int
 }

@@ -44,28 +44,24 @@ var CreateOwnerController = /** @class */ (function () {
     }
     CreateOwnerController.prototype.execute = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name, email, password, doc, phone, zipCode, state, city, neighborhood, street, num, addInfo, ownerAlreadyRegistered, hashPassword, addr, err_1;
+            var _a, name, email, password, doc, phone, zipCode, state, city, neighborhood, street, num, addInfo, addrAlreadyRegistered, addrId, addr, ownerAlreadyRegistered, hashPassword, owner, err_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 5, , 6]);
+                        _b.trys.push([0, 8, , 9]);
                         _a = req.body, name = _a.name, email = _a.email, password = _a.password, doc = _a.doc, phone = _a.phone, zipCode = _a.zipCode, state = _a.state, city = _a.city, neighborhood = _a.neighborhood, street = _a.street, num = _a.num, addInfo = _a.addInfo;
-                        return [4 /*yield*/, prisma_1.prisma.owner.findFirst({
+                        return [4 /*yield*/, prisma_1.prisma.address.findFirst({
                                 where: {
-                                    OR: [
-                                        { email: { equals: email } },
-                                        { doc: { equals: doc } }
-                                    ]
+                                    AND: {
+                                        zipCode: zipCode,
+                                        num: num
+                                    }
                                 }
                             })];
                     case 1:
-                        ownerAlreadyRegistered = _b.sent();
-                        if (ownerAlreadyRegistered) {
-                            throw new Error('Conta já cadastrada!');
-                        }
-                        return [4 /*yield*/, (0, bcryptjs_1.hash)(password, 7)];
-                    case 2:
-                        hashPassword = _b.sent();
+                        addrAlreadyRegistered = _b.sent();
+                        addrId = undefined;
+                        if (!!addrAlreadyRegistered) return [3 /*break*/, 3];
                         return [4 /*yield*/, prisma_1.prisma.address.create({
                                 data: {
                                     zipCode: zipCode,
@@ -77,8 +73,29 @@ var CreateOwnerController = /** @class */ (function () {
                                     addInfo: addInfo,
                                 }
                             })];
-                    case 3:
+                    case 2:
                         addr = _b.sent();
+                        addrId = addr.id;
+                        return [3 /*break*/, 4];
+                    case 3:
+                        addrId = addrAlreadyRegistered.id;
+                        _b.label = 4;
+                    case 4: return [4 /*yield*/, prisma_1.prisma.owner.findFirst({
+                            where: {
+                                OR: [
+                                    { email: { equals: email } },
+                                    { doc: { equals: doc } }
+                                ]
+                            }
+                        })];
+                    case 5:
+                        ownerAlreadyRegistered = _b.sent();
+                        if (ownerAlreadyRegistered) {
+                            throw new Error('Conta já cadastrada!');
+                        }
+                        return [4 /*yield*/, (0, bcryptjs_1.hash)(password, 7)];
+                    case 6:
+                        hashPassword = _b.sent();
                         return [4 /*yield*/, prisma_1.prisma.owner.create({
                                 data: {
                                     name: name,
@@ -86,16 +103,16 @@ var CreateOwnerController = /** @class */ (function () {
                                     password: hashPassword,
                                     doc: doc,
                                     phone: phone,
-                                    addressId: addr.id,
+                                    addressId: addrId,
                                 }
                             })];
-                    case 4:
-                        _b.sent();
-                        return [2 /*return*/, res.status(200).json()];
-                    case 5:
+                    case 7:
+                        owner = _b.sent();
+                        return [2 /*return*/, res.status(200).json(owner)];
+                    case 8:
                         err_1 = _b.sent();
-                        return [2 /*return*/, res.status(400).json(err_1)];
-                    case 6: return [2 /*return*/];
+                        return [2 /*return*/, res.status(400).json(err_1.message)];
+                    case 9: return [2 /*return*/];
                 }
             });
         });
