@@ -8,13 +8,10 @@ datasource db {
 }
 
 model Owner {
-  id        Int     @id @default(autoincrement())
+  id        Int     @id
   name      String
-  email     String  @unique
-  password  String
   address   Address @relation(fields: [addressId], references: [id])
   addressId Int
-  doc       String
   phone     String
   pets      Pet[]
 }
@@ -38,6 +35,6 @@ model Pet {
   specie  String
   race    String
   gender  String
-  owner   Owner  @relation(fields: [ownerId], references: [id])
   ownerId Int
+  owner   Owner  @relation(fields: [ownerId], references: [id])
 }
