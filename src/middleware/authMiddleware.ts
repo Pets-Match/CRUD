@@ -7,7 +7,7 @@ async function authMiddleware(
 ) {
 
     try {
-        const response = await axios.get('http://localhost:8080/auth/middleware', {
+        const response = await axios.get('http://localhost:8081/petsmatch-auth/auth/middleware', {
             headers: {
                 Authorization: req.headers.authorization
             }

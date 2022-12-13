@@ -37,4 +37,6 @@ model Pet {
   gender  String
   ownerId Int
   owner   Owner  @relation(fields: [ownerId], references: [id])
+
+  @@unique([ownerId, id])
 }
