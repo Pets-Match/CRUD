@@ -5,9 +5,8 @@ import axios from 'axios'
 async function authMiddleware(
     req: Request, res: Response, next: NextFunction
 ) {
-
     try {
-        const response = await axios.get('http://localhost:8081/petsmatch-auth/auth/middleware', {
+        const response = await axios.get('http://localhost:3030/auth/middleware', {
             headers: {
                 Authorization: req.headers.authorization
             }

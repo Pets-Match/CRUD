@@ -8,10 +8,9 @@ const remove = new DeletePetController()
 // const read = new ReadPetController();
 
 const petRoutes = (router: Router): void => {
-    router.post('/pet', authMiddleware, create.execute.bind(CreatePetController))
     router.get('/pet', authMiddleware, list.execute.bind(ListMyPetsController))
+    router.post('/pet', authMiddleware, create.execute.bind(CreatePetController))
     router.delete('/pet/:id', authMiddleware, remove.execute.bind(DeletePetController))
-    // router.get('/all-pet', read.execute.bind(ReadPetController))
 }
 
 export { petRoutes }

@@ -1,2 +1,3 @@
 export * from './CreateOwnerController'
-export * from './ReadOwnerController'
+export * from './ListOwnersController'
+export * from './DeleteOwnerController'
