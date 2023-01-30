@@ -4,7 +4,7 @@ import { prisma } from '../../service/prisma'
 class CreateOwnerController {
     async execute(req: Request, res: Response) {
         try {
-            const { name, phone, zipCode, state, city, neighborhood, street, num, addInfo, id, dogName, age, specie, race, gender } = req.body
+            const { name, phone, zipCode, state, city, neighborhood, street, num, addInfo, id } = req.body
             const addrAlreadyRegistered = await prisma.address.findFirst({
                 where: {
                     AND: {

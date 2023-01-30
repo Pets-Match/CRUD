@@ -10,6 +10,6 @@ app.use(router)
 
 app.listen(6666, () => {
     console.log('on 6666')
-    consume("fila1", (message: any) => {
-    });
+    // consume("fila1", (message: any) => {
+    // });
 })
