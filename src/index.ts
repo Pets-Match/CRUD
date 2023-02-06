@@ -1,16 +1,14 @@
 import express from 'express'
 import { router } from './routes/index.routes'
 
-var app = new Array(3);
-for (let i = 6666; i < 6669; i++) {
-    app[i] = express()
 
-    app[i].use(express.json())
-    app[i].use(router)
+const app = express()
 
-    app[i].listen(i, () => {
-        console.log(
-            i
-        )
-    })
-}
+app.use(express.json())
+app.use(router)
+
+app.listen(6666, () => {
+    console.log(
+        6666
+    )
+})
