@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from '../../service/prisma'
 import { hash } from 'bcryptjs'
+import axios from "axios";
 
 class CreatePetController {
     async execute(req: Request, res: Response) {
@@ -15,6 +16,9 @@ class CreatePetController {
             })
 
 
+            if (!owner) {
+                throw new Error('Owner not found')
+            }
 
             const pet = await prisma.pet.create({
                 data: {
@@ -23,12 +27,15 @@ class CreatePetController {
                     specie: specie,
                     race: race,
                     gender: gender,
-                    ownerId: req.userID,
+                    ownerId: owner.id,
                 }
             })
 
+            await axios.post('http://localhost:3001/pet-bus', pet)
+
             return res.status(200).json(pet)
         } catch (err: any) {
+            console.log(err)
             return res.status(400).json(err.message)
         }
     }

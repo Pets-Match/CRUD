@@ -1,15 +1,16 @@
 import express from 'express'
-import { CreateOwnerController } from './controller';
 import { router } from './routes/index.routes'
-const { consume } = require("./communicating/queue");
 
-const app = express()
+var app = new Array(3);
+for (let i = 6666; i < 6669; i++) {
+    app[i] = express()
 
-app.use(express.json())
-app.use(router)
+    app[i].use(express.json())
+    app[i].use(router)
 
-app.listen(6666, () => {
-    console.log('on 6666')
-    // consume("fila1", (message: any) => {
-    // });
-})
+    app[i].listen(i, () => {
+        console.log(
+            i
+        )
+    })
+}
