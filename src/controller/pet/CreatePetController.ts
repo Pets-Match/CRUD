@@ -31,7 +31,7 @@ class CreatePetController {
                 }
             })
 
-            await axios.post('http://localhost:3001/pet-bus', pet)
+            await axios.post('http://localhost:3030/pet-bus', pet)
 
             return res.status(200).json(pet)
         } catch (err: any) {
